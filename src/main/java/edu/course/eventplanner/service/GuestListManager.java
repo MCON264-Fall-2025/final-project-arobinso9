@@ -3,13 +3,15 @@ package edu.course.eventplanner.service;
 import edu.course.eventplanner.model.Guest;
 import java.util.*;
 
-public class GuestListManager<E> {
-    private final LinkedList<E> guests = new LinkedList<>();
-    private final Map<String, E> guestByName = new HashMap<>();
+public class GuestListManager {
+    private final LinkedList<Guest> guests = new LinkedList<>();
+    private final Map<String, Guest> guestByName = new HashMap<>();
     private int size = 0;
 
-    public void addGuest(E guest) {
-        String name = (guest instanceof Guest) ? ((Guest) guest).getName() : guest.toString();
+    public void addGuest(Guest guest) {
+        if (guest == null)
+            return;
+        String name = guest.getName();
 
         // Prevent duplicates
         if (guestByName.containsKey(name)) {
@@ -23,14 +25,14 @@ public class GuestListManager<E> {
     }
 
     public boolean removeGuest(String guestName) {
-        // 1. O(1) Lookup: Use the map to find the object instantly
-        E toRemove = guestByName.get(guestName);
+        //  O(1) Lookup: Use the map to find the object instantly
+        Guest toRemove = guestByName.get(guestName);
 
         if (toRemove == null) {
             return false;
         }
 
-        // 2. Remove from both to keep them in sync
+        //Remove from both to keep them in sync
         guests.remove(toRemove);
         guestByName.remove(guestName);
 
@@ -38,15 +40,15 @@ public class GuestListManager<E> {
         return true;
     }
 
-    public E findGuest(String guestName) {
+    public Guest findGuest(String guestName) {
         return guestByName.get(guestName);
     }
 
-    public int size() {
+    public int getGuestCount() {
         return size;
     }
 
-    public List<E> getAllGuests() {
+    public List<Guest> getAllGuests() {
         return guests;
     }
 }

@@ -15,9 +15,10 @@ public class Guest {
     public String getGroupTag() {
         return groupTag;
     }
+
     @Override
     public int hashCode() {
-        return Objects.hash(groupTag);
+        return Objects.hash(name, groupTag);
     }
 
     @Override

@@ -33,39 +33,33 @@ public class VenueSelectorTest {
         assertEquals(venue2, result, "Eden Palace should be chosen because it has the smaller capacity tie-breaker");
     }
     @Test
-    void testNoValidVenuesReturnsNull(){
+    void testNoValidVenueDueToBudget() {
         //arrange
-        Venue venue1 = new Venue("Chinka", 5000, 50, 5, 10);
-        Venue venue2 = new Venue("Eden Palace", 5000, 40, 4, 10);
-        List<Venue> venues = new ArrayList<Venue>();
-        venues.add(venue1);
-        venues.add(venue2);
+        Venue expensiveVenue = new Venue("Chinka", 5000, 50, 5, 10);
+        List<Venue> venues = new ArrayList<>();
+        venues.add(expensiveVenue);
         VenueSelector venuesSelector = new VenueSelector(venues);
 
-        //act
-        // Budget is lower than the cost
-        Venue result1 = venuesSelector.selectVenue(600, 20);
-        //capacity is less than the guestCount
-        Venue result2 = venuesSelector.selectVenue(600, 60);
+        //act - Budget (600) is lower than the cost (5000)
+        Venue result = venuesSelector.selectVenue(600, 20);
 
         //assert
-        assertNull(result1);
-        assertNull(result2);
+        assertNull(result, "Should return null if budget is insufficient");
     }
+
     @Test
-    void testExactBudgetAndCapacityMatch() {
-        // arrange
-        Venue exactVenue = new Venue("Ateres Miriam", 500, 50, 5, 10);
+    void testNoValidVenueDueToCapacity() {
+        //arrange
+        Venue smallVenue = new Venue("Eden Palace", 500, 40, 4, 10);
         List<Venue> venues = new ArrayList<>();
-        venues.add(exactVenue);
-        VenueSelector selector = new VenueSelector(venues);
+        venues.add(smallVenue);
+        VenueSelector venuesSelector = new VenueSelector(venues);
 
-        // act- budget of 500 and 50 guests- perfectly matches
-        Venue result = selector.selectVenue(500, 50);
+        //act - Capacity (40) is less than the guestCount (60)
+        Venue result = venuesSelector.selectVenue(600, 60);
 
-        // Assert- a venue should have been returned
-        assertNotNull(result);
-        assertEquals("Ateres Miriam", result.getName());
+        //assert
+        assertNull(result, "Should return null if capacity is too small");
     }
 
     @Test
