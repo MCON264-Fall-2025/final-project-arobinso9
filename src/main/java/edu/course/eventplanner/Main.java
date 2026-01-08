@@ -101,7 +101,7 @@ public class Main {
         if (isGuestRemoved) {
             System.out.println(nameToRemove + " with tag: " + tagToRemove + " was successfully removed");
         } else {
-            System.out.println(nameToRemove + "with tag: " + tagToRemove + " was not removed because it is not in the group of guests");
+            System.out.println(nameToRemove + " with tag: " + tagToRemove + " was not removed because it is not in the group of guests");
         }
     }
 
