@@ -113,7 +113,6 @@ public class TaskWorkflowTest {
         assertEquals("Task 2", next.getDescription());
         Task last = manager.executeNextTask(); // Should execute Task 3
         assertEquals("Task 3", last.getDescription());
-        
     }
 
     @Test
